@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.MediaController;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -71,6 +74,22 @@ public class PlayerActivity extends Activity {
                 RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         sl.addRule(RelativeLayout.CENTER_IN_PARENT);
         root.addView(spin, sl);
+        LinearLayout chrome = new LinearLayout(this);
+        chrome.setGravity(android.view.Gravity.CENTER_VERTICAL);
+        chrome.setPadding(Ui.dp(this, 12), Ui.dp(this, 4), Ui.dp(this, 16), Ui.dp(this, 4));
+        chrome.setBackgroundColor(0xB30B0A10);
+        ImageView back = Ui.icon(this, android.R.drawable.ic_media_previous, Ui.TEXT);
+        back.setPadding(Ui.dp(this, 6), Ui.dp(this, 8), Ui.dp(this, 12), Ui.dp(this, 8));
+        back.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { finish(); } });
+        chrome.addView(back, new LinearLayout.LayoutParams(Ui.dp(this, 42), Ui.dp(this, 44)));
+        TextView nowPlaying = Ui.tv(this, title == null || title.isEmpty() ? "A reproduzir" : title, 13.5f, Ui.TEXT, true);
+        nowPlaying.setSingleLine(true);
+        nowPlaying.setEllipsize(android.text.TextUtils.TruncateAt.END);
+        chrome.addView(nowPlaying, new LinearLayout.LayoutParams(0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+        RelativeLayout.LayoutParams cp = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT, Ui.dp(this, 52));
+        cp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        root.addView(chrome, cp);
         setContentView(root);
         String localFile = getIntent().getStringExtra("file");
         if (localFile != null) {

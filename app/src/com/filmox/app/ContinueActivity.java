@@ -21,12 +21,16 @@ public class ContinueActivity extends Activity {
         root.setBackgroundColor(Ui.BG);
         LinearLayout top = new LinearLayout(this);
         top.setGravity(Gravity.CENTER_VERTICAL);
-        top.setPadding(Ui.dp(this, 6), Ui.dp(this, 10), Ui.dp(this, 12), Ui.dp(this, 6));
+        top.setPadding(Ui.dp(this, 6), Ui.dp(this, 14), Ui.dp(this, 12), Ui.dp(this, 10));
         TextView back = Ui.tv(this, "‹", 30, Ui.TEXT, true);
         back.setPadding(Ui.dp(this, 10), 0, Ui.dp(this, 10), Ui.dp(this, 4));
         back.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { finish(); } });
         top.addView(back);
-        top.addView(Ui.tv(this, "Continuar a assistir", 19, Ui.TEXT, true));
+        LinearLayout titleBox = new LinearLayout(this);
+        titleBox.setOrientation(LinearLayout.VERTICAL);
+        titleBox.addView(Ui.tv(this, "Continuar a assistir", 21, Ui.TEXT, true));
+        titleBox.addView(Ui.tv(this, "Retoma de onde paraste", 11.5f, Ui.SUB, false));
+        top.addView(titleBox);
         root.addView(top);
 
         ScrollView sv = new ScrollView(this);
@@ -43,8 +47,8 @@ public class ContinueActivity extends Activity {
             LinearLayout row = new LinearLayout(this);
             row.setOrientation(LinearLayout.HORIZONTAL);
             row.setGravity(Gravity.CENTER_VERTICAL);
-            row.setBackground(Ui.round(Ui.PANEL, 12, this));
-            row.setPadding(Ui.dp(this, 10), Ui.dp(this, 10), Ui.dp(this, 10), Ui.dp(this, 10));
+            row.setBackground(Ui.roundStroke(Ui.PANEL, 14, 0x332F2B38, this));
+            row.setPadding(Ui.dp(this, 12), Ui.dp(this, 12), Ui.dp(this, 12), Ui.dp(this, 12));
             LinearLayout.LayoutParams rp = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             rp.setMargins(0, 0, 0, Ui.dp(this, 10));
@@ -65,7 +69,7 @@ public class ContinueActivity extends Activity {
             LinearLayout mid = new LinearLayout(this);
             mid.setOrientation(LinearLayout.VERTICAL);
             mid.setPadding(Ui.dp(this, 12), 0, Ui.dp(this, 6), 0);
-            TextView tt = Ui.tv(this, e.title == null ? "" : e.title, 15, Ui.TEXT, true);
+            TextView tt = Ui.tv(this, e.title == null ? "" : e.title, 15.5f, Ui.TEXT, true);
             tt.setMaxLines(1);
             mid.addView(tt);
             if (e.label != null && !e.label.equals(e.title)) {
@@ -85,7 +89,7 @@ public class ContinueActivity extends Activity {
             mid.addView(track, tp);
             row.addView(mid, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
 
-            TextView del = Ui.tv(this, "✕", 16, Ui.SUB, false);
+            TextView del = Ui.tv(this, "REMOVER", 9.5f, Ui.SUB, true);
             del.setPadding(Ui.dp(this, 8), Ui.dp(this, 8), Ui.dp(this, 8), Ui.dp(this, 8));
             del.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {

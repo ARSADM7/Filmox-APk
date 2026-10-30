@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.view.View;
 
 public class SplashActivity extends Activity {
     @Override protected void onCreate(Bundle b) {
@@ -18,13 +19,23 @@ public class SplashActivity extends Activity {
         root.setBackgroundColor(Ui.BG);
         TextView logo = new TextView(this);
         logo.setText("FILMOX");
-        logo.setTextSize(44); logo.setTextColor(Ui.ACCENT);
+        logo.setTextSize(42); logo.setTextColor(Ui.ACCENT);
+        logo.setLetterSpacing(0.16f);
         logo.setTypeface(android.graphics.Typeface.DEFAULT_BOLD);
         logo.setGravity(Gravity.CENTER);
         root.addView(logo);
-        TextView sub = Ui.tv(this, "Filmes · Séries · Animes", 14, Ui.SUB, false);
+        View line = new View(this);
+        line.setBackground(Ui.round(Ui.ACCENT, 2, this));
+        LinearLayout.LayoutParams lineParams = new LinearLayout.LayoutParams(Ui.dp(this, 54), Ui.dp(this, 3));
+        lineParams.setMargins(0, Ui.dp(this, 12), 0, Ui.dp(this, 12));
+        root.addView(line, lineParams);
+        TextView sub = Ui.tv(this, "Filmes · Séries · Animes", 14, Ui.TEXT, true);
         sub.setGravity(Gravity.CENTER);
         root.addView(sub);
+        TextView tagline = Ui.tv(this, "O teu próximo mundo começa aqui", 11.5f, Ui.SUB, false);
+        tagline.setGravity(Gravity.CENTER);
+        tagline.setPadding(0, Ui.dp(this, 6), 0, 0);
+        root.addView(tagline);
         setContentView(root);
         new Handler().postDelayed(new Runnable() {
             public void run() {

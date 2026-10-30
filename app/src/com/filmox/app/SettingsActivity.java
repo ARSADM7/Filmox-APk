@@ -81,7 +81,7 @@ public class SettingsActivity extends Activity {
             }
         }));
 
-        TextView about = Ui.tv(this, "Filmox 1.3\nCatálogo e vídeos: hyper.hyperapps.site\nOs downloads ficam na pasta da app e podem ser apagados na página Downloads.", 12.5f, Ui.SUB, false);
+        TextView about = Ui.tv(this, "Filmox 1.3\nCatálogo e vídeos: hyper.hyperapps.site\nOs downloads ficam em Download/FILMOX no Android 10 ou superior. Em versões antigas ficam na pasta privada da app.", 12.5f, Ui.SUB, false);
         about.setPadding(0, Ui.dp(this, 22), 0, 0);
         col.addView(about);
         root.addView(col);

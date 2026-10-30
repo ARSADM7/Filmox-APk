@@ -7,6 +7,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.TextView;
+import android.widget.ImageView;
 
 public class Ui {
     public static final int BG = Color.rgb(10, 10, 16);
@@ -19,6 +20,13 @@ public class Ui {
 
     public static int dp(Context c, float v) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, v, c.getResources().getDisplayMetrics());
+    }
+    public static ImageView icon(Context c, int resource, int tint) {
+        ImageView image = new ImageView(c);
+        image.setImageResource(resource);
+        image.setColorFilter(tint);
+        image.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        return image;
     }
     public static TextView tv(Context c, String text, float sp, int color, boolean bold) {
         TextView t = new TextView(c);

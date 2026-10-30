@@ -77,7 +77,7 @@ public class PlayerActivity extends Activity {
             MediaController mc2 = new MediaController(this);
             mc2.setAnchorView(vv);
             vv.setMediaController(mc2);
-            vv.setVideoPath(localFile);
+            vv.setVideoURI(Uri.parse(localFile));
             vv.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 public void onPrepared(MediaPlayer mp) { spin.setVisibility(View.GONE); vv.start(); }
             });

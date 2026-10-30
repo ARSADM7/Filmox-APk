@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.io.File;
 import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 
 /** Página de Downloads: estado, ver offline, apagar. */
 public class DownloadsActivity extends Activity {
@@ -39,7 +41,7 @@ public class DownloadsActivity extends Activity {
         top.addView(back);
         top.addView(Ui.tv(this, "Downloads", 19, Ui.TEXT, true));
         root.addView(top);
-        TextView hint = Ui.tv(this, "Vídeos guardados no telemóvel — vês sem internet. Os ficheiros ficam na pasta da app.", 12.5f, Ui.SUB, false);
+        TextView hint = Ui.tv(this, "Vídeos guardados no dispositivo para ver sem internet. Pasta: Download/FILMOX/", 12.5f, Ui.SUB, false);
         hint.setPadding(Ui.dp(this, 16), 0, Ui.dp(this, 16), Ui.dp(this, 6));
         root.addView(hint);
         ScrollView sv = new ScrollView(this);
@@ -57,16 +59,31 @@ public class DownloadsActivity extends Activity {
     private void render() {
         listBox.removeAllViews();
         List<Dl.Entry> items = Dl.list(this);
+        Collections.sort(items, new Comparator<Dl.Entry>() {
+            public int compare(Dl.Entry a, Dl.Entry b) {
+                if (a.isSeries() == b.isSeries()) return 0;
+                return a.isSeries() ? 1 : -1;
+            }
+        });
         if (items.isEmpty()) {
-            TextView e = Ui.tv(this, "Sem downloads ainda.\nAbre um filme ou episódio e toca em ⬇ Baixar.", 14.5f, Ui.SUB, false);
+            TextView e = Ui.tv(this, "Sem downloads ainda.\nAbre um filme ou episódio e escolhe Baixar.", 14.5f, Ui.SUB, false);
             e.setPadding(0, Ui.dp(this, 30), 0, 0);
             listBox.addView(e);
             return;
         }
+        String lastGroup = "";
         for (final Dl.Entry e : items) {
             Dl.refresh(this, e);
+            String group = e.isSeries() ? "Séries" : "Filmes";
+            if (!group.equals(lastGroup)) {
+                TextView heading = Ui.tv(this, group, 16, Ui.ACCENT2, true);
+                heading.setPadding(0, Ui.dp(this, 12), 0, Ui.dp(this, 8));
+                listBox.addView(heading);
+                lastGroup = group;
+            }
             final File f = Dl.file(this, e);
-            final boolean done = e.status == DownloadManager.STATUS_SUCCESSFUL && f.exists();
+            final String offlineUri = Dl.downloadUri(this, e);
+            final boolean done = e.status == DownloadManager.STATUS_SUCCESSFUL && offlineUri != null;
             LinearLayout row = new LinearLayout(this);
             row.setOrientation(LinearLayout.HORIZONTAL);
             row.setGravity(Gravity.CENTER_VERTICAL);
@@ -87,7 +104,7 @@ public class DownloadsActivity extends Activity {
             mid.addView(tt);
             String state;
             if (done) {
-                state = "✓ Pronto — " + (f.length() / 1048576) + " MB · ver offline";
+                state = "✓ Pronto — " + ((e.totalBytes > 0 ? e.totalBytes : f.length()) / 1048576) + " MB · ver offline";
             } else if (e.status == DownloadManager.STATUS_RUNNING) {
                 state = "A baixar… " + e.percent() + "%  (" + (e.doneBytes / 1048576) + "/" + (e.totalBytes / 1048576) + " MB)";
             } else if (e.status == DownloadManager.STATUS_PAUSED || e.status == DownloadManager.STATUS_PENDING) {
@@ -95,7 +112,7 @@ public class DownloadsActivity extends Activity {
             } else if (e.status == DownloadManager.STATUS_FAILED) {
                 state = "✗ Falhou — apaga e tenta outra vez";
             } else if (f.exists()) {
-                state = "✓ Pronto — " + (f.length() / 1048576) + " MB · ver offline";
+                state = "✓ Pronto — " + ((e.totalBytes > 0 ? e.totalBytes : f.length()) / 1048576) + " MB · ver offline";
             } else {
                 state = "Estado desconhecido";
             }
@@ -111,13 +128,13 @@ public class DownloadsActivity extends Activity {
                 mid.addView(track, tp);
             }
             row.addView(mid, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
-            if (done || f.exists()) {
-                TextView play = Ui.tv(this, "▶", 19, Ui.ACCENT, true);
+            if (done || offlineUri != null) {
+                TextView play = Ui.tv(this, "VER", 11, Ui.ACCENT, true);
                 play.setPadding(Ui.dp(this, 8), Ui.dp(this, 8), Ui.dp(this, 8), Ui.dp(this, 8));
                 play.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         Intent i = new Intent(DownloadsActivity.this, PlayerActivity.class);
-                        i.putExtra("file", f.getAbsolutePath());
+                        i.putExtra("file", offlineUri);
                         i.putExtra("title", e.title);
                         startActivity(i);
                     }

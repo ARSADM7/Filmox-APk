@@ -44,8 +44,8 @@ public class MainActivity extends Activity {
         logo.setTextSize(24); logo.setTextColor(Ui.ACCENT);
         logo.setTypeface(android.graphics.Typeface.DEFAULT_BOLD);
         top.addView(logo, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
-        TextView favBtn = Ui.tv(this, "★", 22, Ui.ACCENT2, true);
-        favBtn.setPadding(Ui.dp(this, 10), 0, Ui.dp(this, 6), 0);
+        android.widget.ImageView favBtn = Ui.icon(this, android.R.drawable.btn_star_big_on, Ui.ACCENT2);
+        favBtn.setPadding(Ui.dp(this, 10), Ui.dp(this, 4), Ui.dp(this, 6), Ui.dp(this, 4));
         favBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, GridActivity.class);
@@ -54,20 +54,20 @@ public class MainActivity extends Activity {
             }
         });
         top.addView(favBtn);
-        TextView dlBtn = Ui.tv(this, "⬇", 21, Ui.TEXT, true);
-        dlBtn.setPadding(Ui.dp(this, 8), 0, Ui.dp(this, 4), 0);
+        android.widget.ImageView dlBtn = Ui.icon(this, android.R.drawable.stat_sys_download_done, Ui.TEXT);
+        dlBtn.setPadding(Ui.dp(this, 8), Ui.dp(this, 4), Ui.dp(this, 4), Ui.dp(this, 4));
         dlBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { startActivity(new Intent(MainActivity.this, DownloadsActivity.class)); }
         });
         top.addView(dlBtn);
-        TextView setBtn = Ui.tv(this, "⚙", 20, Ui.TEXT, true);
-        setBtn.setPadding(Ui.dp(this, 4), 0, Ui.dp(this, 4), 0);
+        android.widget.ImageView setBtn = Ui.icon(this, android.R.drawable.ic_menu_preferences, Ui.TEXT);
+        setBtn.setPadding(Ui.dp(this, 4), Ui.dp(this, 4), Ui.dp(this, 4), Ui.dp(this, 4));
         setBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { startActivity(new Intent(MainActivity.this, SettingsActivity.class)); }
         });
         top.addView(setBtn);
-        TextView searchBtn = Ui.tv(this, "⌕", 26, Ui.TEXT, true);
-        searchBtn.setPadding(Ui.dp(this, 6), 0, Ui.dp(this, 10), 0);
+        android.widget.ImageView searchBtn = Ui.icon(this, android.R.drawable.ic_menu_search, Ui.TEXT);
+        searchBtn.setPadding(Ui.dp(this, 6), Ui.dp(this, 4), Ui.dp(this, 10), Ui.dp(this, 4));
         searchBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { startActivity(new Intent(MainActivity.this, SearchActivity.class)); }
         });
@@ -91,25 +91,34 @@ public class MainActivity extends Activity {
         LinearLayout nav = new LinearLayout(this);
         nav.setBackgroundColor(Ui.PANEL);
         nav.setPadding(0, Ui.dp(this, 6), 0, Ui.dp(this, 6));
-        String[][] items = {
-            {"⌂", "Início", "home"}, {"🎬", "Filmes", "filmes"}, {"📺", "Séries", "series"},
-            {"🎌", "Animes", "animes"}, {"☰", "Géneros", "generos"}
+        int[][] items = {
+            {android.R.drawable.ic_menu_view, 0},
+            {android.R.drawable.ic_menu_gallery, 1},
+            {android.R.drawable.ic_menu_slideshow, 2},
+            {android.R.drawable.ic_media_play, 3},
+            {android.R.drawable.ic_menu_sort_by_size, 4}
         };
-        for (final String[] it : items) {
+        final String[] labels = {"Início", "Filmes", "Séries", "Animes", "Géneros"};
+        final String[] modes = {"home", "filmes", "series", "animes", "generos"};
+        for (final int[] it : items) {
             LinearLayout btn = new LinearLayout(this);
             btn.setOrientation(LinearLayout.VERTICAL);
             btn.setGravity(Gravity.CENTER);
-            TextView ic = Ui.tv(this, it[0], 19, Ui.TEXT, false); ic.setGravity(Gravity.CENTER);
-            TextView lb = Ui.tv(this, it[1], 10.5f, Ui.SUB, false); lb.setGravity(Gravity.CENTER);
-            btn.addView(ic); btn.addView(lb);
+            android.widget.ImageView ic = Ui.icon(this, it[0], Ui.TEXT);
+            ic.setPadding(0, Ui.dp(this, 2), 0, Ui.dp(this, 2));
+            TextView lb = Ui.tv(this, labels[it[1]], 10.5f, Ui.SUB, false);
+            lb.setGravity(Gravity.CENTER);
+            btn.addView(ic, new LinearLayout.LayoutParams(Ui.dp(this, 24), Ui.dp(this, 24)));
+            btn.addView(lb);
             btn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    if (it[2].equals("home")) return;
-                    if (it[2].equals("generos")) {
+                    String mode = modes[it[1]];
+                    if (mode.equals("home")) return;
+                    if (mode.equals("generos")) {
                         startActivity(new Intent(MainActivity.this, GenresActivity.class));
                     } else {
                         Intent i = new Intent(MainActivity.this, GridActivity.class);
-                        i.putExtra("mode", "section"); i.putExtra("value", it[2]); i.putExtra("title", it[1]);
+                        i.putExtra("mode", "section"); i.putExtra("value", mode); i.putExtra("title", labels[it[1]]);
                         startActivity(i);
                     }
                 }

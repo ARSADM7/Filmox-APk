@@ -2,7 +2,7 @@
 
 App Android de filmes, séries, animes, doramas e novelas — catálogo e vídeos da fonte Hyper (hyper.hyperapps.site).
 
-**Versão actual: 1.3** (versionCode 4) · Pacote: `com.filmox.app` · Android 6.0+ (minSdk 23)
+**Código-fonte: 1.4** (versionCode 5; APK publicado ainda é 1.3) · Pacote: `com.filmox.app` · Android 6.0+ (minSdk 23)
 
 ## Funcionalidades
 
@@ -12,7 +12,8 @@ App Android de filmes, séries, animes, doramas e novelas — catálogo e vídeo
 - Géneros em mosaicos com imagem (27 géneros)
 - Detalhe completo: capa, ano, nota, duração, classificação etária, qualidade/áudio, sinopse expansível, elenco com fotos e personagem, trailer (YouTube), semelhantes
 - Leitor de vídeo nativo com renovação automática do URL assinado
-- Downloads dentro da app para ver offline (página Downloads com progresso; opção "só por Wi-Fi" nas Definições)
+- Downloads offline em `Download/FILMOX/Filmes/` e `Download/FILMOX/Séries/Nome/Temporada N/` no Android 10+; progresso e remoção na página Downloads; opção "só por Wi-Fi" nas Definições
+- Sem conta obrigatória: favoritos, histórico e downloads guardados localmente no dispositivo
 - Favoritos e histórico guardados no telemóvel
 
 ## Código
@@ -25,7 +26,7 @@ Java nativo **sem AndroidX** (só framework Android), compilado com pipeline man
   - `MainActivity`, `GridActivity`, `DetailActivity`, `PlayerActivity`, `SearchActivity`, `GenresActivity`
   - `DownloadsActivity`/`Dl` — downloads offline; `ContinueActivity`/`Hist` — progresso de visualização
   - `Fav` — favoritos locais; `Img` — carregador de imagens com cache; `Ui` — tema/estilos
-- `app/AndroidManifest.xml` — manifesto (versão, permissões: só INTERNET + ACCESS_NETWORK_STATE)
+- `app/AndroidManifest.xml` — manifesto (versão, permissões: INTERNET + ACCESS_NETWORK_STATE; não pede acesso amplo ao armazenamento)
 - `test/TestMain.java` — testes do parser corridos em JVM contra páginas reais
 
 ## Segurança
@@ -36,5 +37,5 @@ não podem ser assinadas com a mesma chave.
 
 ## Instalar
 
-Descarrega `Filmox-1.3.apk` deste repositório e instala no Android
+O APK publicado actualmente é `Filmox-1.3.apk` (código-fonte 1.4 ainda aguarda novo build). Descarrega-o apenas para testar a versão publicada e instala no Android
 (pode ser preciso permitir "instalar de fontes desconhecidas").

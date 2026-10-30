@@ -28,22 +28,22 @@ public class SettingsActivity extends Activity {
         root.setBackgroundColor(Ui.BG);
         LinearLayout top = new LinearLayout(this);
         top.setGravity(Gravity.CENTER_VERTICAL);
-        top.setPadding(Ui.dp(this, 6), Ui.dp(this, 10), Ui.dp(this, 12), Ui.dp(this, 6));
+        top.setPadding(Ui.dp(this, 6), Ui.dp(this, 12), Ui.dp(this, 12), Ui.dp(this, 10));
         TextView back = Ui.tv(this, "‹", 30, Ui.TEXT, true);
         back.setPadding(Ui.dp(this, 10), 0, Ui.dp(this, 10), Ui.dp(this, 4));
         back.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { finish(); } });
         top.addView(back);
-        top.addView(Ui.tv(this, "Definições", 19, Ui.TEXT, true));
+        top.addView(Ui.tv(this, "Definições", 21, Ui.TEXT, true));
         root.addView(top);
 
         LinearLayout col = new LinearLayout(this);
         col.setOrientation(LinearLayout.VERTICAL);
-        col.setPadding(Ui.dp(this, 16), Ui.dp(this, 8), Ui.dp(this, 16), Ui.dp(this, 16));
+        col.setPadding(Ui.dp(this, 16), Ui.dp(this, 12), Ui.dp(this, 16), Ui.dp(this, 24));
 
         // Wi-Fi apenas
         LinearLayout r1 = new LinearLayout(this);
         r1.setGravity(Gravity.CENTER_VERTICAL);
-        r1.setBackground(Ui.round(Ui.PANEL, 12, this));
+        r1.setBackground(Ui.roundStroke(Ui.PANEL, 14, 0x332F2B38, this));
         r1.setPadding(Ui.dp(this, 14), Ui.dp(this, 12), Ui.dp(this, 14), Ui.dp(this, 12));
         LinearLayout c1 = new LinearLayout(this);
         c1.setOrientation(LinearLayout.VERTICAL);
@@ -81,7 +81,7 @@ public class SettingsActivity extends Activity {
             }
         }));
 
-        TextView about = Ui.tv(this, "Filmox 1.3\nCatálogo e vídeos: hyper.hyperapps.site\nOs downloads ficam em Download/FILMOX no Android 10 ou superior. Em versões antigas ficam na pasta privada da app.", 12.5f, Ui.SUB, false);
+        TextView about = Ui.tv(this, "FILMOX · versão 1.4\nCatálogo e vídeos: hyper.hyperapps.site\nSem conta obrigatória. Os downloads ficam em Download/FILMOX no Android 10 ou superior. Em versões antigas ficam na pasta privada da app.", 12.5f, Ui.SUB, false);
         about.setPadding(0, Ui.dp(this, 22), 0, 0);
         col.addView(about);
         root.addView(col);
@@ -90,7 +90,7 @@ public class SettingsActivity extends Activity {
 
     private View actionRow(String label, View.OnClickListener click) {
         TextView t = Ui.tv(this, label, 15.5f, Ui.TEXT, false);
-        t.setBackground(Ui.round(Ui.PANEL, 12, this));
+        t.setBackground(Ui.roundStroke(Ui.PANEL, 14, 0x332F2B38, this));
         t.setPadding(Ui.dp(this, 14), Ui.dp(this, 13), Ui.dp(this, 14), Ui.dp(this, 13));
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

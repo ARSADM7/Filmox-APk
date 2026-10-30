@@ -25,10 +25,10 @@ public class CardAdapter extends BaseAdapter {
         Hyper.Item it = items.get(i);
         LinearLayout cell = new LinearLayout(ctx);
         cell.setOrientation(LinearLayout.VERTICAL);
-        cell.setPadding(Ui.dp(ctx, 5), Ui.dp(ctx, 5), Ui.dp(ctx, 5), Ui.dp(ctx, 8));
+        cell.setPadding(Ui.dp(ctx, 5), Ui.dp(ctx, 5), Ui.dp(ctx, 5), Ui.dp(ctx, 10));
         FrameLayout posterBox = new FrameLayout(ctx);
-        RoundedImageView img = new RoundedImageView(ctx, 10);
-        img.setBackgroundColor(Ui.PANEL);
+        RoundedImageView img = new RoundedImageView(ctx, 12);
+        img.setBackground(Ui.round(Ui.PANEL2, 12, ctx));
         posterBox.addView(img, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Ui.dp(ctx, posterH)));
         if (it.score != null && !it.score.isEmpty()) {
             TextView badge = Ui.tv(ctx, "★ " + it.score, 11, Ui.ACCENT2, true);
@@ -36,16 +36,18 @@ public class CardAdapter extends BaseAdapter {
             badge.setPadding(Ui.dp(ctx, 6), Ui.dp(ctx, 2), Ui.dp(ctx, 6), Ui.dp(ctx, 2));
             FrameLayout.LayoutParams bl = new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            bl.setMargins(Ui.dp(ctx, 5), Ui.dp(ctx, 5), 0, 0);
+            bl.setMargins(Ui.dp(ctx, 7), Ui.dp(ctx, 7), 0, 0);
             posterBox.addView(badge, bl);
         }
         cell.addView(posterBox);
-        TextView t = Ui.tv(ctx, it.title, 12.5f, Ui.TEXT, false);
+        TextView t = Ui.tv(ctx, it.title, 13f, Ui.TEXT, true);
         t.setMaxLines(2);
-        t.setPadding(0, Ui.dp(ctx, 5), 0, 0);
+        t.setPadding(Ui.dp(ctx, 2), Ui.dp(ctx, 7), Ui.dp(ctx, 2), 0);
         cell.addView(t);
         if (it.year != null && !it.year.isEmpty()) {
-            cell.addView(Ui.tv(ctx, it.year, 11, Ui.SUB, false));
+            TextView meta = Ui.tv(ctx, it.year, 11, Ui.SUB, false);
+            meta.setPadding(Ui.dp(ctx, 2), Ui.dp(ctx, 2), 0, 0);
+            cell.addView(meta);
         }
         Img.load(img, it.poster);
         return cell;

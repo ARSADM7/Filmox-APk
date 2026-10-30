@@ -43,12 +43,16 @@ public class GridActivity extends Activity {
         root.setBackgroundColor(Ui.BG);
         LinearLayout top = new LinearLayout(this);
         top.setGravity(Gravity.CENTER_VERTICAL);
-        top.setPadding(Ui.dp(this, 8), Ui.dp(this, 10), Ui.dp(this, 16), Ui.dp(this, 10));
+        top.setPadding(Ui.dp(this, 8), Ui.dp(this, 14), Ui.dp(this, 16), Ui.dp(this, 10));
         TextView back = Ui.tv(this, "‹", 30, Ui.TEXT, true);
         back.setPadding(Ui.dp(this, 8), 0, Ui.dp(this, 12), 0);
         back.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { finish(); } });
         top.addView(back);
-        top.addView(Ui.tv(this, title, "section".equals(mode) ? 23 : 19, Ui.TEXT, true));
+        LinearLayout titleBox = new LinearLayout(this);
+        titleBox.setOrientation(LinearLayout.VERTICAL);
+        titleBox.addView(Ui.tv(this, title, 21, Ui.TEXT, true));
+        titleBox.addView(Ui.tv(this, "Descobre e organiza os teus títulos", 11.5f, Ui.SUB, false));
+        top.addView(titleBox);
         root.addView(top);
 
         if ("section".equals(mode)) {
@@ -66,11 +70,11 @@ public class GridActivity extends Activity {
         root.addView(statusBox);
 
         GridView grid = new GridView(this);
-        grid.setNumColumns("section".equals(mode) ? 4 : 3);
+        grid.setNumColumns(3);
         grid.setVerticalSpacing(Ui.dp(this, 4));
         grid.setHorizontalSpacing(Ui.dp(this, 4));
         grid.setPadding(Ui.dp(this, 6), 0, Ui.dp(this, 6), Ui.dp(this, 8));
-        adapter = new CardAdapter(this, items, "section".equals(mode) ? 118 : 168);
+        adapter = new CardAdapter(this, items, 174);
         grid.setAdapter(adapter);
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> p, View v, int pos, long id) {
@@ -111,16 +115,26 @@ public class GridActivity extends Activity {
     private View sortBar() {
         HorizontalScrollView hs = new android.widget.HorizontalScrollView(this);
         hs.setHorizontalScrollBarEnabled(false);
-        LinearLayout row = new LinearLayout(this);
+        final LinearLayout row = new LinearLayout(this);
         row.setPadding(Ui.dp(this, 12), Ui.dp(this, 2), Ui.dp(this, 12), Ui.dp(this, 6));
         String[][] opts = {{"recentes", "Recentes"}, {"nota", "★ Melhores"}, {"az", "A–Z"}, {"ano", "Ano"}};
         for (final String[] o : opts) {
             final TextView chip = Ui.chip(this, o[1]);
+            chip.setBackground(Ui.roundStroke(Ui.PANEL2, 14, "recentes".equals(o[0]) ? Ui.ACCENT : 0x554B4355, this));
+            if ("recentes".equals(o[0])) chip.setTextColor(Ui.ACCENT2);
             LinearLayout.LayoutParams cl = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             cl.setMargins(0, 0, Ui.dp(this, 8), 0);
             chip.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) { sortMode = o[0]; applySort(); }
+                public void onClick(View v) {
+                    sortMode = o[0]; applySort();
+                    for (int n = 0; n < row.getChildCount(); n++) {
+                        TextView c = (TextView) row.getChildAt(n);
+                        boolean selected = c == v;
+                        c.setTextColor(selected ? Ui.ACCENT2 : Ui.TEXT);
+                        c.setBackground(Ui.roundStroke(Ui.PANEL2, 14, selected ? Ui.ACCENT : 0x554B4355, GridActivity.this));
+                    }
+                }
             });
             row.addView(chip, cl);
         }

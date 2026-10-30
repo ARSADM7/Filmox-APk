@@ -34,12 +34,16 @@ public class DownloadsActivity extends Activity {
         root.setBackgroundColor(Ui.BG);
         LinearLayout top = new LinearLayout(this);
         top.setGravity(Gravity.CENTER_VERTICAL);
-        top.setPadding(Ui.dp(this, 6), Ui.dp(this, 10), Ui.dp(this, 12), Ui.dp(this, 6));
+        top.setPadding(Ui.dp(this, 6), Ui.dp(this, 14), Ui.dp(this, 12), Ui.dp(this, 10));
         TextView back = Ui.tv(this, "‹", 30, Ui.TEXT, true);
         back.setPadding(Ui.dp(this, 10), 0, Ui.dp(this, 10), Ui.dp(this, 4));
         back.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { finish(); } });
         top.addView(back);
-        top.addView(Ui.tv(this, "Downloads", 19, Ui.TEXT, true));
+        LinearLayout titleBox = new LinearLayout(this);
+        titleBox.setOrientation(LinearLayout.VERTICAL);
+        titleBox.addView(Ui.tv(this, "Downloads", 21, Ui.TEXT, true));
+        titleBox.addView(Ui.tv(this, "A tua biblioteca offline", 11.5f, Ui.SUB, false));
+        top.addView(titleBox);
         root.addView(top);
         TextView hint = Ui.tv(this, "Vídeos guardados no dispositivo para ver sem internet. Pasta: Download/FILMOX/", 12.5f, Ui.SUB, false);
         hint.setPadding(Ui.dp(this, 16), 0, Ui.dp(this, 16), Ui.dp(this, 6));
@@ -87,8 +91,8 @@ public class DownloadsActivity extends Activity {
             LinearLayout row = new LinearLayout(this);
             row.setOrientation(LinearLayout.HORIZONTAL);
             row.setGravity(Gravity.CENTER_VERTICAL);
-            row.setBackground(Ui.round(Ui.PANEL, 12, this));
-            row.setPadding(Ui.dp(this, 10), Ui.dp(this, 10), Ui.dp(this, 10), Ui.dp(this, 10));
+            row.setBackground(Ui.roundStroke(Ui.PANEL, 14, 0x332F2B38, this));
+            row.setPadding(Ui.dp(this, 12), Ui.dp(this, 12), Ui.dp(this, 12), Ui.dp(this, 12));
             LinearLayout.LayoutParams rp = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             rp.setMargins(0, 0, 0, Ui.dp(this, 10));

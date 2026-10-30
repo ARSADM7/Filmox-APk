@@ -27,18 +27,22 @@ public class GenresActivity extends Activity {
         root.setBackgroundColor(Ui.BG);
         LinearLayout top = new LinearLayout(this);
         top.setGravity(Gravity.CENTER_VERTICAL);
-        top.setPadding(Ui.dp(this, 8), Ui.dp(this, 10), Ui.dp(this, 16), Ui.dp(this, 10));
+        top.setPadding(Ui.dp(this, 8), Ui.dp(this, 14), Ui.dp(this, 16), Ui.dp(this, 12));
         TextView back = Ui.tv(this, "‹", 30, Ui.TEXT, true);
         back.setPadding(Ui.dp(this, 8), 0, Ui.dp(this, 12), 0);
         back.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { finish(); } });
         top.addView(back);
-        top.addView(Ui.tv(this, "Géneros", 23, Ui.TEXT, true));
+        LinearLayout titleBox = new LinearLayout(this);
+        titleBox.setOrientation(LinearLayout.VERTICAL);
+        titleBox.addView(Ui.tv(this, "Explorar géneros", 21, Ui.TEXT, true));
+        titleBox.addView(Ui.tv(this, "Escolhe um estilo e descobre novos títulos", 11.5f, Ui.SUB, false));
+        top.addView(titleBox);
         root.addView(top);
 
         GridView grid = new GridView(this);
         grid.setNumColumns(2);
-        grid.setVerticalSpacing(Ui.dp(this, 10));
-        grid.setHorizontalSpacing(Ui.dp(this, 10));
+        grid.setVerticalSpacing(Ui.dp(this, 12));
+        grid.setHorizontalSpacing(Ui.dp(this, 8));
         grid.setPadding(Ui.dp(this, 12), Ui.dp(this, 4), Ui.dp(this, 12), Ui.dp(this, 12));
         adapter = new BaseAdapter() {
             public int getCount() { return genres.size(); }
@@ -47,22 +51,25 @@ public class GenresActivity extends Activity {
             public View getView(int pos, View cv, ViewGroup parent) {
                 final String[] g = genres.get(pos);
                 FrameLayout tile = new FrameLayout(GenresActivity.this);
-                RoundedImageView img = new RoundedImageView(GenresActivity.this, 12);
+                RoundedImageView img = new RoundedImageView(GenresActivity.this, 14);
                 img.setBackgroundColor(Ui.PANEL);
                 tile.addView(img, new FrameLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT, Ui.dp(GenresActivity.this, 96)));
-                TextView dot = Ui.tv(GenresActivity.this, "●", 10, Ui.ACCENT, false);
-                FrameLayout.LayoutParams dp2 = new FrameLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                dp2.gravity = Gravity.TOP | Gravity.RIGHT;
-                dp2.setMargins(0, Ui.dp(GenresActivity.this, 6), Ui.dp(GenresActivity.this, 8), 0);
-                tile.addView(dot, dp2);
-                TextView name = Ui.tv(GenresActivity.this, g[1], 16.5f, Ui.TEXT, true);
+                        ViewGroup.LayoutParams.MATCH_PARENT, Ui.dp(GenresActivity.this, 128)));
+                View shade = new View(GenresActivity.this);
+                android.graphics.drawable.GradientDrawable fade = new android.graphics.drawable.GradientDrawable(
+                        android.graphics.drawable.GradientDrawable.Orientation.TOP_BOTTOM,
+                        new int[]{0x11000000, 0x22000000, 0xE6000000});
+                fade.setCornerRadius(Ui.dp(GenresActivity.this, 14));
+                shade.setBackground(fade);
+                tile.addView(shade, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Ui.dp(GenresActivity.this, 128)));
+                
+                TextView name = Ui.tv(GenresActivity.this, g[1], 16, Ui.TEXT, true);
                 name.setShadowLayer(6, 0, 2, 0xCC000000);
                 FrameLayout.LayoutParams np = new FrameLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 np.gravity = Gravity.BOTTOM;
-                np.setMargins(Ui.dp(GenresActivity.this, 10), 0, Ui.dp(GenresActivity.this, 10), Ui.dp(GenresActivity.this, 8));
+                np.setMargins(Ui.dp(GenresActivity.this, 12), 0, Ui.dp(GenresActivity.this, 10), Ui.dp(GenresActivity.this, 12));
+                name.setBackground(Ui.round(0x33000000, 8, GenresActivity.this));
                 tile.addView(name, np);
                 tile.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {

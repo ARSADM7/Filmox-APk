@@ -89,8 +89,8 @@ public class MainActivity extends Activity {
 
     private View bottomNav() {
         LinearLayout nav = new LinearLayout(this);
-        nav.setBackgroundColor(Ui.PANEL);
-        nav.setPadding(0, Ui.dp(this, 6), 0, Ui.dp(this, 6));
+        nav.setBackground(Ui.roundStroke(Ui.PANEL, 16, 0x332F2B38, this));
+        nav.setPadding(Ui.dp(this, 3), Ui.dp(this, 7), Ui.dp(this, 3), Ui.dp(this, 7));
         int[][] items = {
             {android.R.drawable.ic_menu_view, 0},
             {android.R.drawable.ic_menu_gallery, 1},
@@ -104,9 +104,9 @@ public class MainActivity extends Activity {
             LinearLayout btn = new LinearLayout(this);
             btn.setOrientation(LinearLayout.VERTICAL);
             btn.setGravity(Gravity.CENTER);
-            android.widget.ImageView ic = Ui.icon(this, it[0], Ui.TEXT);
+            android.widget.ImageView ic = Ui.icon(this, it[0], it[1] == 0 ? Ui.ACCENT : Ui.SUB);
             ic.setPadding(0, Ui.dp(this, 2), 0, Ui.dp(this, 2));
-            TextView lb = Ui.tv(this, labels[it[1]], 10.5f, Ui.SUB, false);
+            TextView lb = Ui.tv(this, labels[it[1]], 10.5f, it[1] == 0 ? Ui.ACCENT2 : Ui.SUB, it[1] == 0);
             lb.setGravity(Gravity.CENTER);
             btn.addView(ic, new LinearLayout.LayoutParams(Ui.dp(this, 24), Ui.dp(this, 24)));
             btn.addView(lb);
@@ -187,7 +187,10 @@ public class MainActivity extends Activity {
         heroImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
         hero.addView(heroImg, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Ui.dp(this, 300)));
         View shade = new View(this);
-        shade.setBackgroundColor(0x66000000);
+        android.graphics.drawable.GradientDrawable heroFade = new android.graphics.drawable.GradientDrawable(
+                android.graphics.drawable.GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[]{0x33000000, 0x55000000, 0xEE0B0A10});
+        shade.setBackground(heroFade);
         hero.addView(shade, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Ui.dp(this, 300)));
         LinearLayout heroBox = new LinearLayout(this);
         heroBox.setOrientation(LinearLayout.VERTICAL);
@@ -336,7 +339,7 @@ public class MainActivity extends Activity {
         LinearLayout header = new LinearLayout(this);
         header.setGravity(Gravity.CENTER_VERTICAL);
         header.setPadding(Ui.dp(this, 16), Ui.dp(this, 18), Ui.dp(this, 16), Ui.dp(this, 8));
-        TextView h = Ui.tv(this, label, 17, Ui.TEXT, true);
+        TextView h = Ui.tv(this, label, 18, Ui.TEXT, true);
         header.addView(h, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
         if (gridMode != null) {
             TextView all = Ui.tv(this, "Ver todos ›", 13.5f, Ui.ACCENT, false);
@@ -364,7 +367,7 @@ public class MainActivity extends Activity {
             img.setBackgroundColor(Ui.PANEL);
             card.addView(img, new LinearLayout.LayoutParams(Ui.dp(this, 108), Ui.dp(this, 158)));
             Img.load(img, it.poster);
-            TextView t = Ui.tv(this, it.title, 12, Ui.TEXT, false);
+            TextView t = Ui.tv(this, it.title, 12.5f, Ui.TEXT, true);
             t.setMaxLines(2);
             t.setPadding(0, Ui.dp(this, 4), 0, 0);
             LinearLayout.LayoutParams tl = new LinearLayout.LayoutParams(Ui.dp(this, 108), ViewGroup.LayoutParams.WRAP_CONTENT);

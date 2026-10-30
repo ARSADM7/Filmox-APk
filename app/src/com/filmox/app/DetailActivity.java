@@ -91,16 +91,16 @@ public class DetailActivity extends Activity {
         bd.setScaleType(ImageView.ScaleType.CENTER_CROP);
         bd.setBackgroundColor(Ui.PANEL);
         header.addView(bd, new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, Ui.dp(this, 250)));
+                ViewGroup.LayoutParams.MATCH_PARENT, Ui.dp(this, 280)));
         Img.load(bd, detail.image != null && !detail.image.isEmpty() ? detail.image : poster0);
         View shade = new View(this);
         GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,
                 new int[]{ 0x00000000, 0x660A0A10, Ui.BG });
         shade.setBackground(gd);
         FrameLayout.LayoutParams shp = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, Ui.dp(this, 250));
+                ViewGroup.LayoutParams.MATCH_PARENT, Ui.dp(this, 280));
         header.addView(shade, shp);
-        TextView title = Ui.tv(this, detail.title.isEmpty() ? title0 : detail.title, 24, Color.WHITE, true);
+        TextView title = Ui.tv(this, detail.title.isEmpty() ? title0 : detail.title, 26, Color.WHITE, true);
         title.setShadowLayer(6, 0, 2, 0xCC000000);
         title.setMaxLines(2);
         FrameLayout.LayoutParams tp = new FrameLayout.LayoutParams(
@@ -109,11 +109,11 @@ public class DetailActivity extends Activity {
         tp.setMargins(Ui.dp(this, 16), 0, Ui.dp(this, 16), Ui.dp(this, 10));
         header.addView(title, tp);
         col.addView(header, new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, Ui.dp(this, 250)));
+                ViewGroup.LayoutParams.MATCH_PARENT, Ui.dp(this, 280)));
 
         LinearLayout pad = new LinearLayout(this);
         pad.setOrientation(LinearLayout.VERTICAL);
-        pad.setPadding(Ui.dp(this, 16), Ui.dp(this, 8), Ui.dp(this, 16), Ui.dp(this, 24));
+        pad.setPadding(Ui.dp(this, 18), Ui.dp(this, 12), Ui.dp(this, 18), Ui.dp(this, 28));
         col.addView(pad);
 
         // Meta: ano - nota - duracao - classificacao (+ qualidade/audio via watch)
@@ -132,7 +132,7 @@ public class DetailActivity extends Activity {
         String cert = detail.certification.isEmpty() ? "" : "[" + detail.certification + "+]   ";
         final String metaBase = (yr == null || yr.isEmpty() ? "" : yr + "   ") + rt + dur + cert
                 + (detail.isSeries() ? detail.episodes.size() + " episódio(s)" : labelType(type));
-        metaView = Ui.tv(this, metaBase, 13.5f, Ui.ACCENT2, false);
+        metaView = Ui.tv(this, metaBase, 13, Ui.ACCENT2, true);
         pad.addView(metaView);
 
         // Botoes: Play grande + Favorito + Baixar
@@ -395,7 +395,7 @@ public class DetailActivity extends Activity {
     private TextView squareBtn(String label) {
         TextView b = Ui.tv(this, label, 19, Ui.ACCENT, true);
         b.setGravity(Gravity.CENTER);
-        b.setBackground(Ui.roundStroke(Ui.PANEL, 12, Ui.ACCENT, this));
+        b.setBackground(Ui.roundStroke(Ui.PANEL2, 14, 0x88FF790F, this));
         return b;
     }
 
